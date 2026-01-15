@@ -1,0 +1,20 @@
+{
+  "Group": "net.flectone.tale",
+  "Name": "FlectoneTale",
+  "Version": "0.0.1",
+  "Description": "Control any message",
+  "Authors": [
+    {
+      "Name": "TheFaser",
+      "Email": "artem.mochalin11@gmail.com",
+      "Url": "https://flectone.net/"
+    }
+  ],
+  "Website": "https://flectone.net/tale/",
+  "ServerVersion": "*",
+  "Dependencies": {},
+  "OptionalDependencies": {},
+  "DisabledByDefault": false,
+  "IncludesAssetPack": false,
+  "Main": "net.flectone.tale.FlectoneTaleImpl"
+}

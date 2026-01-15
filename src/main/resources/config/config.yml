@@ -1,0 +1,20 @@
+version: "0.0.1"
+chat:
+  null_chat: "#ff7171Chat is disabled on this server"
+  types:
+    local:
+      enable: true
+      range: 250
+      priority: 0
+      trigger: ""
+      null_receiver: "#ff7171Nobody heard you, use '!' before the message to write in Global Chat'"
+      format: "[L] #6BB6FF<player>#A9A9A9: <message>"
+    global:
+      enable: true
+      range: -1
+      priority: 5
+      trigger: "!"
+      null_receiver: "#ff7171Nobody heard you"
+      format: "[G] #6BB6FF<player>#FFFAFA» <message>"
+greeting:
+  format: "#3af253Welcome, <player>"

@@ -1,0 +1,70 @@
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'com.gradleup.shadow' version '9.3.1'
+    id 'com.github.gmazzo.buildconfig' version '6.0.7'
+    id 'io.freefair.lombok' version "9.1.0"
+}
+
+group = "net.flectone.tale"
+version = project_version
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+//    compileOnly "com.hypixel.hytale:HytaleServer-parent:1.0-SNAPSHOT"
+
+    api "org.jspecify:jspecify:$jspecify_version"
+    compileOnlyApi "org.mapstruct:mapstruct:$mapstruct_version"
+    compileOnlyApi "org.projectlombok:lombok:$lombok_version"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$mapstruct_version"
+    annotationProcessor "org.projectlombok:lombok:$lombok_version"
+
+    compileOnly "com.google.inject:guice:$guice_version"
+    compileOnly "tools.jackson.dataformat:jackson-dataformat-yaml:$jackson_dataformat_version"
+    compileOnly "org.apache.commons:commons-text:$apache_commons_text_version"
+    compileOnly "org.jdbi:jdbi3-core:$jdbi3_core_version"
+    compileOnly "org.jdbi:jdbi3-sqlobject:$jdbi3_core_version"
+    compileOnly "com.zaxxer:HikariCP:$HikariCP_version"
+
+    compileOnly "com.discord4j:discord4j-core:$discord4j_version"
+    compileOnly "com.github.twitch4j:twitch4j:$twitch4j_version"
+    compileOnly "org.telegram:telegrambots-longpolling:$telegrambots_version"
+    compileOnly "org.telegram:telegrambots-client:$telegrambots_version"
+
+    implementation fileTree("library") { include "*.jar" }
+    compileOnly fileTree("templib") { include "*.jar" }
+}
+
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+buildConfig {
+    className("BuildConfig")
+    packageName("net.flectone.tale")
+    rootProject.ext.properties.findAll { key, value ->
+        !key.contains('.')
+    }.each { key, value ->
+        buildConfigField(String, key.toString().toUpperCase(), value)
+    }
+}
+
+shadowJar {
+    relocate("com.zaxxer.hikari", "net.flectone.tale.library.hikari")
+    relocate("org.jdbi", "net.flectone.tale.library.jdbi3")
+    relocate("com.alessiodp.libby", "net.flectone.tale.library.libby")
+    relocate("org.apache.commons", "net.flectone.tale.library.apache")
+    relocate("com.fasterxml.jackson", "net.flectone.tale.library.jackson")
+    relocate("tools.jackson", "net.flectone.tale.library.jackson")
+    relocate("org.snakeyaml.engine", "net.flectone.tale.library.snakeyaml")
+    relocate("com.google.inject", "net.flectone.tale.library.guice")
+    relocate("com.google.common", "net.flectone.tale.library.guava")
+
+    archiveFileName = "FlectoneTale-" + project_version + ".jar"
+
+}
